@@ -27,7 +27,7 @@ namespace MMSGP.Movement
                     var selectedObjects = _selectionManager.GetSelectedObjects();
                     foreach (var selectedObject in selectedObjects)
                     {
-                        var selectableUnit = selectedObject.Value.GetComponent<SelectableUnit>();
+                        var selectableUnit = selectedObject.Value.GetComponent<Unit>();
                         if (selectableUnit != null)
                         {
                             selectableUnit.MoveTo(hitInfo.point);

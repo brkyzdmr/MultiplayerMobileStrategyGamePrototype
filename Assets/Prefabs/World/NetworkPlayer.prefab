@@ -15,7 +15,6 @@ GameObject:
   - component: {fileID: -4588593515369992877}
   - component: {fileID: 8751344588043847824}
   - component: {fileID: 4622037191253914962}
-  - component: {fileID: -5007338136519981821}
   m_Layer: 0
   m_Name: NetworkPlayer
   m_TagString: Untagged
@@ -52,6 +51,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
+  PlayerId: 0
   _nickName:
     _length: 0
     _data:
@@ -83,7 +83,6 @@ MonoBehaviour:
   - {fileID: 8629585504153990831}
   - {fileID: 176005610458513525}
   - {fileID: 8751344588043847824}
-  - {fileID: -5007338136519981821}
   SimulationBehaviours: []
 --- !u!114 &176005610458513525
 MonoBehaviour:
@@ -142,22 +141,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49795cb5472544d2ae827bcfaba3c151, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &-5007338136519981821
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8629585504153990829}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 35854a549b9d40efa4eebb5e6c819105, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _interpolationDataSource: 0
-  unit:
-    RawGuidValue: 9ae972df5cab58b479a105ae6945a254
-  unitCount: 3
 --- !u!1001 &7283488300580805855
 PrefabInstance:
   m_ObjectHideFlags: 0

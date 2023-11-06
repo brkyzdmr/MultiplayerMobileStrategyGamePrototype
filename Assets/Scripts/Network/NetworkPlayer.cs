@@ -1,20 +1,21 @@
+using System;
 using UnityEngine;
 using Fusion;
+using MMSGP.Collectables;
 using MMSGP.Managers;
-using MMSGP.Selection;
 using MMSGP.Units;
 
 namespace MMSGP.Network
 {
-    public class NetworkPlayer : NetworkBehaviour, IPlayerLeft
+    public class NetworkPlayer : NetworkBehaviour, IPlayerLeft, IPlayerJoined
     { 
         public static NetworkPlayer Local { get; set; }
-
+        
+        [Networked(OnChanged = nameof(OnPlayerIdChanged))]
+        public int PlayerId { get; set; }
+        
         [Networked(OnChanged = nameof(OnNickNameChanged))]
         public NetworkString<_16> nickName { get; set; }
-
-        // Remote Client Token Hash
-        [Networked] public int token { get; set; }
 
         bool isPublicJoinMessageSent = false;
 
@@ -38,9 +39,13 @@ namespace MMSGP.Network
                 //Enable UI for local player
                 localUI.SetActive(true);
 
-                RPC_SetNickName(GameManager.Instance.playerNickName);
+                var nickname = GameManager.Instance.playerNickName;
+                RPC_SetNickName(nickname);
                 
-                // unitSpawner.SpawnUnits();
+                var playerId = GameManager.Instance.playerId;
+                RPC_SetPlayerId(playerId);
+                Debug.Log($"PlayerId set to {PlayerId} for player {gameObject.name}");
+
                 Debug.Log("Spawned local player");
             }
             else
@@ -51,14 +56,21 @@ namespace MMSGP.Network
                 Debug.Log($"{Time.time} Spawned remote player");
             }
 
-            //Set the Player as a player object
-            Runner.SetPlayerObject(Object.InputAuthority, Object);
+            
 
             //Make it easier to tell which player is which.
             transform.name = $"P_{Object.Id}";
-            GameManager.Instance.onLocalPlayerSpawned?.Invoke();
         }
 
+        public override void Despawned(NetworkRunner runner, bool hasState)
+        {
+            PlayerManager.RemovePlayer(this);
+        }
+
+        public void PlayerJoined(PlayerRef player)
+        {
+        }
+        
         public void PlayerLeft(PlayerRef player)
         {
             if (Object.HasStateAuthority)
@@ -75,16 +87,24 @@ namespace MMSGP.Network
                 Runner.Despawn(Object);
         }
 
-        static void OnNickNameChanged(Changed<NetworkPlayer> changed)
+        private static void OnNickNameChanged(Changed<NetworkPlayer> changed)
         {
             changed.Behaviour.OnNickNameChanged();
+        }
+        
+        private static void OnPlayerIdChanged(Changed<NetworkPlayer> changed)
+        {
+            changed.Behaviour.OnPlayerIdChanged();
+        }
+        
+        private void OnPlayerIdChanged()
+        {
+            Debug.Log($"PlayerId changed for player to {PlayerId} for player {gameObject.name}");
         }
 
         private void OnNickNameChanged()
         {
             Debug.Log($"Nickname changed for player to {nickName} for player {gameObject.name}");
-
-            // playerNickNameTM.text = nickName.ToString();
         }
 
         [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
@@ -99,6 +119,13 @@ namespace MMSGP.Network
 
                 isPublicJoinMessageSent = true;
             }
+        }
+        
+        [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
+        public void RPC_SetPlayerId(int playerId, RpcInfo info = default)
+        {
+            Debug.Log($"[RPC] SetPlayerId {playerId}");
+            this.PlayerId = playerId;
         }
     }
 }

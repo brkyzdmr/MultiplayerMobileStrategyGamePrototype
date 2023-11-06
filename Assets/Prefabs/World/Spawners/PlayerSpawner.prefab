@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 435317528037569700}
   - component: {fileID: 435317528037569701}
   - component: {fileID: 6555526641148482772}
+  - component: {fileID: 1762823112768840097}
   m_Layer: 0
   m_Name: PlayerSpawner
   m_TagString: Untagged
@@ -54,7 +55,8 @@ MonoBehaviour:
   NetworkGuid:
     RawGuidValue: 5a4e92d6c6882ec4db2465a0bea4a2b4
   NestedObjects: []
-  NetworkedBehaviours: []
+  NetworkedBehaviours:
+  - {fileID: 1762823112768840097}
   SimulationBehaviours:
   - {fileID: 6555526641148482772}
 --- !u!114 &6555526641148482772
@@ -71,3 +73,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerPrefab:
     RawGuidValue: b04c8d333fa374f4ab77eb54cee60ffa
+--- !u!114 &1762823112768840097
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 435317528037569723}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35854a549b9d40efa4eebb5e6c819105, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
+  unit:
+    RawGuidValue: 9ae972df5cab58b479a105ae6945a254
+  unitCount: 3

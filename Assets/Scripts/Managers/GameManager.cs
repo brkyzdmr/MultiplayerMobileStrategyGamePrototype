@@ -1,19 +1,23 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Fusion;
+using MMSGP;
 using MMSGP.Managers;
 using MMSGP.Network;
 using MMSGP.Units;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
+using Random = UnityEngine.Random;
 
-public class GameManager : MonoBehaviour
+public class GameManager : NetworkBehaviour
 {
     public static GameManager Instance { get; private set; }
     public string playerNickName = "";
+    public int playerId;
 
     private byte[] _connectionToken;
-
-    [HideInInspector] public UnityEvent onLocalPlayerSpawned;
 
     private void Awake()
     {
@@ -30,21 +34,6 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
     
-    private void OnEnable()
-    {
-        onLocalPlayerSpawned.AddListener(OnLocalPlayerSpawned);
-    }
-
-    private void OnDisable()
-    {
-        onLocalPlayerSpawned.RemoveListener(OnLocalPlayerSpawned);
-    }
-
-    private void OnLocalPlayerSpawned()
-    {
-        
-    }
-
     void Start()
     {
         //Check if token is valid, if not get a new one
@@ -53,6 +42,11 @@ public class GameManager : MonoBehaviour
             _connectionToken = ConnectionTokenUtils.NewToken();
             Debug.Log($"Player connection token {ConnectionTokenUtils.HashToken(_connectionToken)}");
         }
+    }
+
+    private void Update()
+    {
+        PlayerManager.HandleNewPlayers();
     }
 
     public void SetConnectionToken(byte[] connectionToken)

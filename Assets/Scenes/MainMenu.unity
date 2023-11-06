@@ -1421,6 +1421,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2019027528}
   - component: {fileID: 2019027529}
+  - component: {fileID: 2019027530}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1455,7 +1456,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c94999b803b8b3645b7e3d1af6f74243, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
   playerNickName: 
-  onLocalPlayerSpawned:
-    m_PersistentCalls:
-      m_Calls: []
+  playerId: 0
+--- !u!114 &2019027530
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2019027527}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectInterest: 1
+  DefaultInterestGroups: []
+  DestroyWhenStateAuthorityLeaves: 1
+  AllowStateAuthorityOverride: 0
+  AoiPositionSource: {fileID: 0}
+  Flags: 2561
+  NetworkGuid:
+    RawGuidValue: cecb02e11f924ffcb505cd7f7b6e31ff
+  NestedObjects: []
+  NetworkedBehaviours:
+  - {fileID: 2019027529}
+  SimulationBehaviours: []

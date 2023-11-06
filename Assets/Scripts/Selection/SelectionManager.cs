@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 using Fusion;
+using MMSGP.Managers;
 using MMSGP.Network;
 using MMSGP.Units;
 using UnityEngine;
+using NetworkPlayer = MMSGP.Network.NetworkPlayer;
 
 namespace MMSGP.Selection
 {
@@ -23,11 +25,13 @@ namespace MMSGP.Selection
         private Vector2[] _corners;
         private Vector3[] _verts;
         private Vector3[] _vecs;
-
+        private NetworkPlayer _networkPlayer;
+        
         private void Start()
         {
             _camera = Camera.main;
             _dragSelect = false;
+            _networkPlayer = GetComponent<NetworkPlayer>();
         }
 
         private void Update()
@@ -62,8 +66,6 @@ namespace MMSGP.Selection
 
         private void SingleSelect()
         {
-            if (HasInputAuthority == false) return;
-            
             Ray ray = _camera.ScreenPointToRay(_p1);
 
             if (Physics.Raycast(ray, out _hit, 50000.0f, selectableLayer))
@@ -89,8 +91,6 @@ namespace MMSGP.Selection
 
         private void MarqueeSelect()
         {
-            if (HasInputAuthority == false) return;
-            
             _verts = new Vector3[4];
             _vecs = new Vector3[4];
             int i = 0;
@@ -124,14 +124,18 @@ namespace MMSGP.Selection
 
         public void AddSelected(GameObject go)
         {
+            if (go == null) return;
+            var unit = go.GetComponent<Unit>();
+            if (unit.OwnerPlayerId != _networkPlayer.PlayerId) return;
+
             int id = go.GetInstanceID();
 
             if (!(selectedTable.ContainsKey(id)))
             {
-                if (go.GetComponent<SelectableUnit>() != null)
+                if (go.GetComponent<Unit>() != null)
                 {
                     selectedTable.Add(id, go);
-                    go.GetComponent<SelectableUnit>().SetIsSelected(true);
+                    go.GetComponent<Unit>().SetIsSelected(true);
                     Debug.Log("Added " + id + " to selected dict");
                 }
             }
@@ -141,7 +145,7 @@ namespace MMSGP.Selection
         {
             foreach (KeyValuePair<int, GameObject> entry in selectedTable)
             {
-                entry.Value.GetComponent<SelectableUnit>().SetIsSelected(false);
+                entry.Value.GetComponent<Unit>().SetIsSelected(false);
             }
 
             selectedTable.Clear();        

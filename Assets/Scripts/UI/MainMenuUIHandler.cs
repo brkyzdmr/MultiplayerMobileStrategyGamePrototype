@@ -30,6 +30,7 @@ namespace MMSGP.UI
             PlayerPrefs.Save();
 
             GameManager.Instance.playerNickName = inputField.text;
+            GameManager.Instance.playerId = Time.time.GetHashCode();
             
             StartGame(GameMode.AutoHostOrClient, GameManager.Instance.GetConnectionToken(), "GameScene");
         }

@@ -10,17 +10,15 @@ namespace MMSGP.Units
         [SerializeField] private NetworkPrefabRef unit = NetworkPrefabRef.Empty;
         [SerializeField] private int unitCount = 3;
 
-        private void Start()
+        public void SpawnUnits(PlayerRef player, int playerId, Vector3 playerPosition)
         {
-            if (Object.HasStateAuthority == false) return;
-            SpawnUnits();
-        }
-        
-        private void SpawnUnits()
-        {
+            var randomColor = Utils.RandomColor();
             for (int i = 0; i < unitCount; i++)
             {
-                Runner.Spawn(unit, transform.position + Random.insideUnitSphere * 5, Quaternion.identity, Object.InputAuthority);
+                var unitNO = Runner.Spawn(unit, playerPosition + Random.insideUnitSphere * 5, Quaternion.identity, player);
+                unitNO.GetComponent<Unit>().OwnerPlayerId = playerId;
+                unitNO.GetComponent<UnitColor>().SetColor(randomColor);
+                Debug.Log($"Spawned unit {unitNO} for player {playerId}");
             }
         }
     }

@@ -99,6 +99,7 @@ GameObject:
   - component: {fileID: -4460505917607510386}
   - component: {fileID: -7019161262443759147}
   - component: {fileID: 5050436572367549556}
+  - component: {fileID: -5317756272706749062}
   m_Layer: 6
   m_Name: Unit
   m_TagString: Untagged
@@ -183,6 +184,7 @@ MonoBehaviour:
   NetworkedBehaviours:
   - {fileID: 6894413157252518452}
   - {fileID: 5050436572367549556}
+  - {fileID: -5317756272706749062}
   SimulationBehaviours: []
 --- !u!136 &-4460505917607510386
 CapsuleCollider:
@@ -242,6 +244,20 @@ MonoBehaviour:
     RotTeleportRadians: 1.5
   UseLegacySharedModeInterpolation: 0
   TargetInterpolationDelay: 0.03
+--- !u!114 &-5317756272706749062
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8562730587832260467}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51118a151bfe4b9aa1f6a54863b15d8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
+  _NetworkedColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &8773867491113011538
 GameObject:
   m_ObjectHideFlags: 0

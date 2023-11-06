@@ -9,7 +9,7 @@ using MMSGP.Units;
 
 namespace MMSGP.Network
 {
-    public class PlayerSpawner : SimulationBehaviour, IPlayerJoined, IPlayerLeft, ISpawned
+    public class NetworkPlayerSpawner : SimulationBehaviour, IPlayerJoined, IPlayerLeft, ISpawned
     {
         [SerializeField] private NetworkPrefabRef playerPrefab = NetworkPrefabRef.Empty;
         private SpawnPoint[] _spawnPoints = null;
@@ -29,6 +29,7 @@ namespace MMSGP.Network
             _gameStateController = gameStateController;
             foreach (var player in Runner.ActivePlayers)
             {
+                Debug.Log($"Player {player.PlayerId} spawned!");
                 SpawnPlayer(player);
             }
         }
@@ -58,9 +59,16 @@ namespace MMSGP.Network
             var spawnPosition = _spawnPoints[index].transform.position;
             
             var playerObject = Runner.Spawn(playerPrefab, spawnPosition, Quaternion.identity, player);
+            var networkPlayer = playerObject.GetComponent<NetworkPlayer>();
             
+            var playerId = GameManager.Instance.playerId;
+            GetComponent<UnitSpawner>().SpawnUnits(player, playerId, spawnPosition);
+            
+            Debug.Log("NetworkPlayerSpawner: " + playerId);
+
+
             Runner.SetPlayerObject(player, playerObject);
-            _gameStateController.TrackNewPlayer(playerObject.GetComponent<NetworkPlayer>().Id);
+            PlayerManager.AddPlayer(networkPlayer);
         }
     }
 }
