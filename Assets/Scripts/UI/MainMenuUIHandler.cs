@@ -6,6 +6,8 @@ using Fusion;
 using MMSGP.Managers;
 using UnityEngine;
 using TMPro;
+using UnityEngine.Serialization;
+using UnityEngine.UI;
 
 namespace MMSGP.UI
 {
@@ -14,6 +16,7 @@ namespace MMSGP.UI
         [SerializeField] private NetworkRunner networkRunner;
         [SerializeField] private TMP_InputField inputField;
         
+        [SerializeField] private Button joinGameButton;
         private NetworkRunner _runnerInstance = null;
 
         void Start()
@@ -21,7 +24,7 @@ namespace MMSGP.UI
             if (PlayerPrefs.HasKey("PlayerNickname"))
             {
                 inputField.text = PlayerPrefs.GetString("PlayerNickname");
-            }        
+            }
         }
         
         public void OnJoinGameClicked()
@@ -31,7 +34,7 @@ namespace MMSGP.UI
 
             GameManager.Instance.playerNickName = inputField.text;
             GameManager.Instance.playerId = Time.time.GetHashCode();
-            
+            joinGameButton.interactable = false;
             StartGame(GameMode.AutoHostOrClient, GameManager.Instance.GetConnectionToken(), "GameScene");
         }
         
