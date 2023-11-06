@@ -8,6 +8,10 @@ Each player can move their units and attack enemy units.
 - Unity 2021.3.22f1
 - Photon Fusion 1.1.8.725
 
+## Architecture
+- The game is based on **Host/Client** architecture
+- Non-deterministic game state is synchronized using **Photon Fusion**
+
 ## How to run
 - Clone the repository
 - Open the project in Unity
