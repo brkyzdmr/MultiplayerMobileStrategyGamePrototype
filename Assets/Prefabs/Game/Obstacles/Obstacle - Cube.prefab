@@ -14,11 +14,11 @@ GameObject:
   - component: {fileID: 4455390852256379388}
   - component: {fileID: 142547430447589005}
   m_Layer: 0
-  m_Name: Obstacle
+  m_Name: Obstacle - Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &4455390852256379389
 Transform:

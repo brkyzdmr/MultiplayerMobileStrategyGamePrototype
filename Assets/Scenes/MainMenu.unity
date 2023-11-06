@@ -1134,6 +1134,7 @@ MonoBehaviour:
   networkRunner: {fileID: 845096002441476384, guid: 6f7f018c1ee7a2442b40cbed18d51843,
     type: 3}
   inputField: {fileID: 410704162}
+  joinGameButton: {fileID: 661868889}
 --- !u!1 &1461619025
 GameObject:
   m_ObjectHideFlags: 0
